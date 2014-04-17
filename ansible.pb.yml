@@ -6,5 +6,5 @@
     - datavars.yml
 
   tasks:
-    - name: template it
+    - name: build demo_render.conf
       template: src=srx-policer.j2 dest=./demo_render.conf
