@@ -9,3 +9,9 @@ Be sure to read more from Ethan on his blog site, [The Peering Introvert](http:/
 ````
 user@linux> python demo_render.py
 ````
+
+## Further Reading
+
+* [YAML](http://www.yaml.org/)
+* [Jinja2](http://jinja.pocoo.org/docs/)
+* [Ansible](docs.ansible.com)
