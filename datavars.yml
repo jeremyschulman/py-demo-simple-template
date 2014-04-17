@@ -1,0 +1,7 @@
+---
+interface:
+    name: reth0
+    unit: 0
+    police:
+        limit: 80m
+        burst: 256k

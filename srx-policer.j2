@@ -1,0 +1,58 @@
+{%- set ifl = interface.name ~ "_" ~ interface.unit %}
+{%- set i_fltr = ifl ~ "_INBOUND-FILTER" %}
+{%- set o_fltr = ifl ~ "_OUTBOUND-FILTER" %}
+{%- set policer = ifl ~ "_GLOBAL-POLICER" %}
+
+interfaces {
+    {{ interface.name }} {
+        unit {{ interface.unit }} {
+            family inet {
+                filter {
+                    input {{ i_fltr }};
+                    output {{ o_fltr }};
+                }
+            }
+        }
+    }
+}
+firewall {
+    policer {{ policer }} {
+        if-exceeding {
+            bandwidth-limit {{ interface.police.limit }};
+            burst-size-limit {{ interface.police.burst }};
+        }
+        then discard;
+    }
+    filter {{ o_fltr }} {
+        term SOURCE-ANY {
+            from {
+                source-address {
+                    0.0.0.0/0;
+                }
+            }
+            then {
+                policer {{ policer }};
+                accept;
+            }
+        }
+        term END-POLICY {
+            then accept;
+        }
+    }
+    filter {{ i_fltr }} {
+        term SOURCE-ANY {
+            from {
+                source-address {
+                    0.0.0.0/0;
+                }
+            }
+            then {
+                policer {{ policer }};
+                accept;
+            }
+        }
+        term END-POLICY {
+            then accept;
+        }
+    }
+}
