@@ -1,0 +1,10 @@
+---
+- name: simple template render
+  hosts: localhost
+  gather_facts: no
+  vars_files:
+    - datavars.yml
+
+  tasks:
+    - name: template it
+      template: src=srx-policer.j2 dest=./demo_render.conf
